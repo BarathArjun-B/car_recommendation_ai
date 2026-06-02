@@ -1,0 +1,26 @@
+{
+  "name": "bavh-motors-ai-backend",
+  "version": "1.0.0",
+  "description": "Scalable MERN backend foundation for BAVH Motors AI.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "dev:nodemon": "nodemon --legacy-watch server.js"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "bcryptjs": "latest",
+    "cheerio": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "jsonwebtoken": "latest",
+    "mongoose": "latest",
+    "node-cron": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  }
+}

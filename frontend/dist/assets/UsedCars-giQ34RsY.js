@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DUAcabCT.js";import{t}from"./useLiveCars-CtRlOjz1.js";import{CarListingPage as n}from"./NewCars-Zo1TwR4i.js";var r=e(),i=()=>(0,r.jsx)(n,{title:`Used Cars`,description:`Used listings with owner history and driven kilometers from the backend cars API.`,...t(`used`),used:!0});export{i as default};

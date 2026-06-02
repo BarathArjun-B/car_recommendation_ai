@@ -1,0 +1,6 @@
+{"event":"serverStarted","payload":{"port":"5001","timestamp":"2026-06-02T15:31:59.192Z"},"createdAt":"2026-06-02T15:31:59.193Z"}
+{"event":"serverStarted","payload":{"port":"5001","timestamp":"2026-06-02T15:32:30.435Z"},"createdAt":"2026-06-02T15:32:30.435Z"}
+{"event":"serverStarted","payload":{"port":"5001","timestamp":"2026-06-02T15:33:21.199Z"},"createdAt":"2026-06-02T15:33:21.199Z"}
+{"event":"serverStarted","payload":{"port":"5001","timestamp":"2026-06-02T15:33:39.868Z"},"createdAt":"2026-06-02T15:33:39.868Z"}
+{"event":"serverStarted","payload":{"port":"5001","timestamp":"2026-06-02T15:48:16.557Z"},"createdAt":"2026-06-02T15:48:16.558Z"}
+{"event":"carViewed","payload":{"carId":"tata-nexon-2025","model":"Nexon Fearless Plus"},"createdAt":"2026-06-02T15:48:56.496Z"}

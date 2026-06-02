@@ -1,0 +1,26 @@
+{
+  "name": "bavh-motors-ai",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "start": "vite --host 0.0.0.0 --port 5050",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "axios": "latest",
+    "bootstrap": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "vite": "latest"
+  }
+}
