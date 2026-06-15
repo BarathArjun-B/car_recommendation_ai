@@ -15,6 +15,7 @@ const Profile = lazy(() => import('../pages/Profile.jsx'));
 const Wishlist = lazy(() => import('../pages/Wishlist.jsx'));
 const Compare = lazy(() => import('../pages/Compare.jsx'));
 const NotFound = lazy(() => import('../pages/NotFound.jsx'));
+const AiRecommendations = lazy(() => import('../pages/AiRecommendations.jsx'));
 
 const AppRoutes = () => (
   <Suspense fallback={<Loader />}>
@@ -28,6 +29,7 @@ const AppRoutes = () => (
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/compare" element={<Compare />} />
+        <Route path="/ai-recommend" element={<AiRecommendations />} />
         <Route path="/account" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />

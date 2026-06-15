@@ -5,6 +5,7 @@ import { clearCache } from './cacheService.js';
 import { fetchHttpFeedCars } from './providers/httpFeedProvider.js';
 import { fetchLocalSeedCars } from './providers/localSeedProvider.js';
 import { fetchScrapedCars } from './providers/scraperProvider.js';
+import { processAndUpsertCar } from '../jobs/ingestionPipeline.js';
 
 const isMongoConnected = () => mongoose.connection.readyState === 1;
 
@@ -42,19 +43,13 @@ export const ingestCars = async () => {
     };
   }
 
-  const fetchedCars = (await fetchCarsFromConfiguredProvider()).map(normalizeCar);
+  const fetchedCars = await fetchCarsFromConfiguredProvider();
   let inserted = 0;
   let updated = 0;
 
-  for (const car of fetchedCars) {
-    const result = await Car.updateOne(
-      { source: car.source, sourceId: car.sourceId },
-      { $set: car, $setOnInsert: { createdAt: new Date() } },
-      { upsert: true, runValidators: true },
-    );
-
-    if (result.upsertedCount) inserted += result.upsertedCount;
-    else if (result.modifiedCount) updated += result.modifiedCount;
+  for (const rawCar of fetchedCars) {
+    const success = await processAndUpsertCar(rawCar);
+    if (success) inserted++; // Simplification: tracking as inserted/processed
   }
 
   clearCache();

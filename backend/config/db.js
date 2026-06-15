@@ -11,6 +11,11 @@ const connectDB = async () => {
   try {
     const connection = await mongoose.connect(mongoUri);
     console.log(`MongoDB connected: ${connection.connection.host}`);
+    
+    // Phase 4: Database Validation - Ensure indexes are built to prevent duplicates
+    await mongoose.syncIndexes();
+    console.log('[INFO] MongoDB indexes synchronized successfully.');
+    
     return connection;
   } catch (error) {
     console.error(`MongoDB connection error: ${error.message}`);

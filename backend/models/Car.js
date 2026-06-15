@@ -95,6 +95,13 @@ const carSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    variant: {
+      type: String,
+      trim: true,
+    },
+    drivetrain: String,
+    apiNinjasSyncDate: Date,
+    unsplashImageId: String,
   },
   { timestamps: true },
 );

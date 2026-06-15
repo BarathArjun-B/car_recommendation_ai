@@ -8,7 +8,7 @@ const navItems = [
   { label: 'New Cars', path: '/new-cars' },
   { label: 'Used Cars', path: '/used-cars' },
   { label: 'Reviews', path: '/reviews' },
-  { label: 'Wishlist', path: '/wishlist' },
+  { label: 'AI Match ✨', path: '/ai-recommend' },
 ];
 
 const linkClass = ({ isActive }) =>
