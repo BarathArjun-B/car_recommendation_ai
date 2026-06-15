@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import apiClient from '../services/apiClient';
 import { useAiSearch } from '../services/useAiSearch';
 import AiSearchBox from '../components/SearchBar/AiSearchBox';
+import { API_ENDPOINTS } from '../config/endpoints.js';
 
 const AiRecommendations = () => {
   const [preferences, setPreferences] = useState({
@@ -86,7 +87,7 @@ const AiRecommendations = () => {
       console.log('--- DEBUG: executeSearch ---');
       console.log('Sending payload:', { message: payloadMessage, filters: payloadFilters, mode: 'detailed_json' });
 
-      const response = await apiClient.post('/chat', { 
+      const response = await apiClient.post(API_ENDPOINTS.chat, { 
         message: payloadMessage,
         filters: payloadFilters,
         mode: 'detailed_json'

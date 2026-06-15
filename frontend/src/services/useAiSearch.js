@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import apiClient from './apiClient';
+import { API_ENDPOINTS } from '../config/endpoints.js';
 
 // Basic cache for debounced searches to avoid duplicate API calls
 const searchCache = new Map();
@@ -45,7 +46,7 @@ export const useAiSearch = (initialPreferences, onFiltersExtracted) => {
 
       setIsExtracting(true);
       try {
-        const response = await apiClient.post('/chat/extract', { message: query });
+        const response = await apiClient.post(API_ENDPOINTS.chatExtract, { message: query });
         if (response.data.success && response.data.filters) {
           searchCache.set(query, response.data.filters);
           onFiltersExtracted(response.data.filters);
