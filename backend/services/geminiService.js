@@ -117,17 +117,33 @@ ${message}
     const response = await Promise.race([generatePromise, timeoutPromise]);
 
     let rawText = response.text.trim();
-    console.log('[GEMINI RAW TEXT]:', rawText);
+    console.log('[DEBUG] GEMINI RAW RESPONSE:', rawText);
+    
     // Safely remove markdown if it hallucinated it
     if (rawText.startsWith('```json')) rawText = rawText.substring(7);
     if (rawText.startsWith('```')) rawText = rawText.substring(3);
     if (rawText.endsWith('```')) rawText = rawText.substring(0, rawText.length - 3);
 
-    console.log('[GEMINI EXTRACTED TEXT]:', rawText);
-    return JSON.parse(rawText.trim());
+    const geminiFilters = JSON.parse(rawText.trim());
+    const regexFilters = regexExtractFilters(message);
+    const finalFilters = geminiFilters;
+
+    console.log(
+      "[FILTER_DEBUG]",
+      JSON.stringify({
+        source: "geminiService",
+        geminiFilters,
+        regexFilters,
+        finalFilters
+      }, null, 2)
+    );
+
+    return geminiFilters;
   } catch (error) {
     console.error('[GEMINI EXTRACTION ERROR]', error.message);
-    return regexExtractFilters(message);
+    const fallback = regexExtractFilters(message);
+    console.log('[DEBUG] REGEX FALLBACK USED:', fallback);
+    return fallback;
   }
 };
 
