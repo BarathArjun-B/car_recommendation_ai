@@ -16,6 +16,7 @@ export const handleExtract = async (req, res) => {
 };
 
 export const handleChat = async (req, res) => {
+  console.log("[CHAT_CONTROLLER] START");
   try {
     const { message, history, mode = 'chat', filters: providedFilters } = req.body;
     
@@ -26,7 +27,9 @@ export const handleChat = async (req, res) => {
     // 1. Use provided filters or extract requirements using Gemini
     let filters = providedFilters;
     if (!filters && message) {
+      console.log("[CHAT_CONTROLLER] BEFORE_GEMINI");
       filters = await extractFiltersFromMessage(message, history);
+      console.log("[CHAT_CONTROLLER] AFTER_GEMINI", filters);
     }
     
     // Fallback if Gemini fails or returns null
@@ -56,6 +59,7 @@ export const handleChat = async (req, res) => {
       aiExplanation
     });
   } catch (error) {
+    console.log("[CHAT_CONTROLLER] GEMINI_ERROR", error);
     console.error('Chat API Error:', error);
     res.status(500).json({ success: false, message: 'Server Error processing chat' });
   }

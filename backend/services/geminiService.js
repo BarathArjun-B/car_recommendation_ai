@@ -56,8 +56,10 @@ const regexExtractFilters = (msg) => {
 };
 
 export const extractFiltersFromMessage = async (message, history = []) => {
+  console.log("[GEMINI_SERVICE] ENTER");
   const client = getAIClient();
   if (!client) {
+    console.log("[GEMINI_SERVICE] REGEX_FALLBACK_TRIGGERED");
     console.warn('[GEMINI] API Key missing, using regex extraction fallback.');
     return regexExtractFilters(message);
   }
@@ -106,6 +108,7 @@ ${message}
       setTimeout(() => reject(new Error('Gemini Extraction Timeout')), 4000)
     );
 
+    console.log("[GEMINI_SERVICE] CALLING_GEMINI");
     const generatePromise = client.models.generateContent({
       model: DEFAULT_MODEL,
       contents: prompt,
@@ -117,7 +120,7 @@ ${message}
     const response = await Promise.race([generatePromise, timeoutPromise]);
 
     let rawText = response.text.trim();
-    console.log('[DEBUG] GEMINI RAW RESPONSE:', rawText);
+    console.log("[GEMINI_SERVICE] RESPONSE", rawText);
     
     // Safely remove markdown if it hallucinated it
     if (rawText.startsWith('```json')) rawText = rawText.substring(7);
@@ -140,6 +143,7 @@ ${message}
 
     return geminiFilters;
   } catch (error) {
+    console.log("[GEMINI_SERVICE] REGEX_FALLBACK_TRIGGERED");
     console.error('[GEMINI EXTRACTION ERROR]', error.message);
     const fallback = regexExtractFilters(message);
     console.log('[DEBUG] REGEX FALLBACK USED:', fallback);

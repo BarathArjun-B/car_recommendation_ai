@@ -1,6 +1,7 @@
 import Car from '../models/Car.js';
 
 export const getRecommendations = async (filters) => {
+  console.log("[RECOMMENDATION_ENGINE] FILTERS", filters);
   const { 
     budget, 
     fuelType, 
@@ -23,6 +24,7 @@ export const getRecommendations = async (filters) => {
     dbQuery.type = { $in: [new RegExp('^suv$', 'i'), new RegExp('^muv$', 'i')] };
   }
 
+  console.log("[RECOMMENDATION_ENGINE] QUERY", dbQuery);
   const cars = await Car.find(dbQuery);
   const scoredCars = [];
 
@@ -189,5 +191,11 @@ export const getRecommendations = async (filters) => {
     return a.startingPrice - b.startingPrice; // ASC price for final output
   });
 
-  return clusteredCars.slice(0, 5);
+  const finalRecommendations = clusteredCars.slice(0, 5);
+  console.log(
+    "[RECOMMENDATION_ENGINE] RESULTS",
+    finalRecommendations
+  );
+
+  return finalRecommendations;
 };
