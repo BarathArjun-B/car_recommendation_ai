@@ -295,7 +295,7 @@ MongoDB Atlas is used as the primary database.
 
 **Barath Arjun**
 
-Computer Science Engineer (2027)
+Computer Science Engineering Student (2027)
 
 Passionate about Software Development, AI Applications, and Building Real-World Products.
 
