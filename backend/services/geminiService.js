@@ -18,11 +18,48 @@ const DEFAULT_MODEL = 'gemini-2.5-flash';
  * Phase 3: AI Requirement Extraction
  * Extracts structured car preferences from a natural language query and conversation history.
  */
+const regexExtractFilters = (msg) => {
+  const text = msg.toLowerCase();
+  const filters = {
+    budget: null,
+    fuelType: null,
+    bodyType: null,
+    familySize: null,
+    transmission: null,
+    condition: null,
+    usage: null,
+    brand: null,
+    mileagePreference: null,
+    safetyPreference: null
+  };
+
+  const budgetMatch = text.match(/(?:under|below|max|budget)\s*(\d+(?:\.\d+)?)\s*(?:lakhs?|l|)/i) || text.match(/(\d+(?:\.\d+)?)\s*(?:lakhs?|l)\s*(?:budget)/i);
+  if (budgetMatch) filters.budget = parseFloat(budgetMatch[1]);
+
+  const bodyMatch = text.match(/(suv|sedan|hatchback|muv|ev)/i);
+  if (bodyMatch) {
+    let type = bodyMatch[1].toUpperCase();
+    if (type === 'EV') type = 'SUV'; // Some mapping if needed, but let's keep it exact:
+    filters.bodyType = bodyMatch[1].toUpperCase();
+  }
+
+  if (text.match(/(family|7 seater|children|kids|parents|long trips)/i)) {
+    filters.familySize = 5;
+    if (text.match(/(7|seven)\s*seater/i)) filters.familySize = 7;
+    filters.usage = 'family';
+  }
+
+  if (text.match(/(automatic|amt|at)/i)) filters.transmission = 'Automatic';
+  if (text.match(/(manual|mt)/i)) filters.transmission = 'Manual';
+
+  return filters;
+};
+
 export const extractFiltersFromMessage = async (message, history = []) => {
   const client = getAIClient();
   if (!client) {
-    console.warn('[GEMINI] API Key missing, skipping extraction.');
-    return null; // Fallback handled by controller
+    console.warn('[GEMINI] API Key missing, using regex extraction fallback.');
+    return regexExtractFilters(message);
   }
 
   const prompt = `
@@ -90,7 +127,7 @@ ${message}
     return JSON.parse(rawText.trim());
   } catch (error) {
     console.error('[GEMINI EXTRACTION ERROR]', error.message);
-    return null;
+    return regexExtractFilters(message);
   }
 };
 
