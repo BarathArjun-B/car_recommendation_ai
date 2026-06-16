@@ -1,12 +1,7 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
-const PORT = process.env.PORT || 5001;
-const BASE_URL = `http://localhost:${PORT}/api/cars`;
+import apiClient from './apiClient.js';
 
 const testEndpoints = async () => {
-  console.log(`Starting API Tests on ${BASE_URL}...`);
+  console.log(`Starting API Tests...`);
   const results = { passed: 0, failed: 0, errors: [] };
 
   const assert = (condition, message) => {
@@ -22,7 +17,7 @@ const testEndpoints = async () => {
 
   try {
     // 1. GET /api/cars (Pagination & Basic Load)
-    let res = await axios.get(BASE_URL);
+    let res = await apiClient.get('/api/cars');
     assert(res.status === 200, 'GET /api/cars returned 200 OK');
     assert(res.data.success === true, 'Response payload success flag is true');
     assert(Array.isArray(res.data.cars), 'Returned a cars array');
@@ -32,12 +27,12 @@ const testEndpoints = async () => {
     const sampleId = sampleCar._id;
 
     // 2. GET /api/cars/:id (Single Car Details)
-    res = await axios.get(`${BASE_URL}/${sampleId}`);
+    res = await apiClient.get(`/api/cars/${sampleId}`);
     assert(res.status === 200, `GET /api/cars/${sampleId} returned 200 OK`);
     assert(res.data.car._id === sampleId, 'Returned correct car ID');
 
     // 3. Filtering by brand
-    res = await axios.get(`${BASE_URL}?brand=Tata`);
+    res = await apiClient.get(`/api/cars?brand=Tata`);
     assert(res.status === 200, 'GET /api/cars?brand=Tata returned 200 OK');
     if (res.data.cars.length > 0) {
       assert(res.data.cars.every(c => c.brand.toLowerCase() === 'tata'), 'All returned cars match brand filter');

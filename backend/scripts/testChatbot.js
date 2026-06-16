@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from './apiClient.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -13,7 +13,7 @@ const testChatbot = async () => {
     console.log('Sending message to AI Chatbot API:');
     console.log(`"${payload.message}"\n`);
     
-    const response = await axios.post('http://localhost:5001/api/chat', payload);
+    const response = await apiClient.post('/api/chat', payload);
     
     console.log('--- GEMINI EXTRACTED FILTERS ---');
     console.log(response.data.filters);

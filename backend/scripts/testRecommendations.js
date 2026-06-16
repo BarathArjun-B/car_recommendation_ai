@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from './apiClient.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -16,7 +16,7 @@ const testRecommendations = async () => {
 
     console.log('Testing Recommendation API with preferences:', preferences);
     
-    const response = await axios.post('http://localhost:5001/api/recommendations', preferences);
+    const response = await apiClient.post('/api/recommendations', preferences);
     
     console.log(`\nSuccessfully received ${response.data.count} recommendations!`);
     console.log('--- TOP MATCH ---');

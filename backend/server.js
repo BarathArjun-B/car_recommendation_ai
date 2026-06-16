@@ -38,9 +38,9 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      'http://localhost:5173',
+      process.env.FRONTEND_URL,
       'https://car-recommendation-ai.vercel.app',
-    ],
+    ].filter(Boolean),
     credentials: true,
   })
 );

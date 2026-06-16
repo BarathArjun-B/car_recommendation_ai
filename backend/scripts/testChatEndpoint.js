@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from './apiClient.js';
 
 const testChat = async () => {
   try {
@@ -7,7 +7,7 @@ const testChat = async () => {
     };
 
     console.log('Testing POST /api/chat with payload:', payload);
-    const response = await axios.post('http://localhost:5001/api/chat', payload);
+    const response = await apiClient.post('/api/chat', payload);
     
     console.log('\n✅ Response received successfully!');
     console.log(JSON.stringify(response.data, null, 2));
